@@ -1,63 +1,57 @@
+import i18n, { i18nPromise } from "./i18n";
+import { I18nextProvider } from "react-i18next";
 import React, {
     MouseEventHandler,
-    PropsWithChildren,
+    useCallback,
     useEffect,
     useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
-import { FloatButton, ConfigProvider, Input, Space, theme } from "antd";
-import { MoonOutlined } from "@ant-design/icons";
-
-const ThemeConfigBtn = ({ changeTheme }: { changeTheme: () => void }) => {
-    return <FloatButton icon={<MoonOutlined />} onClick={changeTheme} />;
-};
-
-const ThemeConfigComponent = () => {
-    const { useToken } = theme;
-    const { token } = useToken();
-
-    const setStyleVariables = () => {
-        document.body.style.setProperty(
-            "--background-color",
-            token.colorBgBase
-        );
-    };
-
-    useEffect(() => {
-        setStyleVariables();
-    });
-    return <></>;
-};
+import { FloatButton, ConfigProvider, Input, Space, theme, App } from "antd";
+import { MoonOutlined, SunOutlined, SettingOutlined } from "@ant-design/icons";
+import ChangeLangBtn from "./components/main/ChangeLangBtn";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
     const [dark, setDark] = useState(true);
 
-    const changeTheme = () => {
+    const changeTheme = useCallback(() => {
         setDark(!dark);
-    };
+    }, [dark]);
 
     return (
         <ConfigProvider
             theme={{
-                // 1. Use dark algorithm
                 algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-
-                // 2. Combine dark algorithm and compact algorithm
-                // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+                cssVar: true,
             }}
         >
-            <ThemeConfigBtn changeTheme={changeTheme} />
-            <ThemeConfigComponent />
-            {children}
+            <App>
+                <I18nextProvider i18n={i18n} defaultNS={"translation"}>
+                    <FloatButton.Group
+                        trigger="hover"
+                        icon={<SettingOutlined />}
+                    >
+                        <ChangeLangBtn />
+                        <FloatButton
+                            icon={dark ? <SunOutlined /> : <MoonOutlined />}
+                            onClick={changeTheme}
+                        />
+                    </FloatButton.Group>
+                    {children}
+                </I18nextProvider>
+            </App>
         </ConfigProvider>
     );
 };
-const root = createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-        <Provider>
-            <RouterProvider router={router} />
-        </Provider>
-    </React.StrictMode>
+i18nPromise.then(() =>
+    createRoot(document.getElementById("root")!).render(
+        <React.StrictMode>
+            <Provider>
+                <RouterProvider router={router} />
+            </Provider>
+        </React.StrictMode>
+    )
 );
