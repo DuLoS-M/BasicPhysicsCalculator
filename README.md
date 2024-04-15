@@ -1,9 +1,11 @@
 # BasicPhysicsCalculator
 
 Made with:
-- Electron (using electron forge)
+- Electron
+- Electron Forge
 - React
 - Vite
 - TailwindCSS
 - Ant Design
 - PixiJs
+- i18n
