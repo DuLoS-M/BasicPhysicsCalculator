@@ -1,1 +1,1 @@
-# BasicPhysicsSolver
+# BasicPhysicsCalculator
