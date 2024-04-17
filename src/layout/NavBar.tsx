@@ -1,65 +1,80 @@
 import React, { useState } from "react";
 import { Layout, Menu, Button, theme } from "antd";
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from "@ant-design/icons";
+import { SwapOutlined, QuestionOutlined } from "@ant-design/icons";
 import { Outlet } from "react-router-dom";
+import VectorIcon from "../assets/icons/vector";
+import TrajectoryIcon from "../assets/icons/trajectory";
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
+
 const { Header, Sider, Content } = Layout;
 
 export default function NavBar() {
-    const [collapsed, setCollapsed] = useState(false);
+    const { t } = useTranslation("NavBar");
     const {
-        token: { colorBgContainer, borderRadiusLG },
+        token: { colorBorderSecondary },
     } = theme.useToken();
 
     return (
-        <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+        <Layout hasSider className="h-screen">
+            <Sider
+                className="flex flex-col border-r"
+                collapsible
+                width={240}
+                theme="light"
+                style={{ borderColor: colorBorderSecondary }}
+            >
                 <div className="demo-logo-vertical" />
-                <Button onClick={() => setCollapsed(!collapsed)}>+</Button>
                 <Menu
-                    theme="dark"
-                    mode="inline"
+                    style={{ border: "none" }}
                     defaultSelectedKeys={["1"]}
                     items={[
                         {
                             key: "1",
-                            icon: <UserOutlined />,
-                            label: "Conversion de medidas",
+                            icon: <SwapOutlined />,
+                            label: (
+                                <NavLink to="/unit-conversion">
+                                    {t("unit-conversion")}
+                                </NavLink>
+                            ),
                         },
                         {
                             key: "2",
-                            icon: <VideoCameraOutlined />,
-                            label: "Suma de vectores",
+                            icon: <VectorIcon />,
+                            label: (
+                                <NavLink to="/vector-sum">
+                                    {t("vector-sum")}
+                                </NavLink>
+                            ),
                         },
                         {
                             key: "3",
-                            icon: <UploadOutlined />,
-                            label: "Movimiento de proyectiles",
+                            icon: <TrajectoryIcon />,
+                            label: (
+                                <NavLink to="/projectile-movement">
+                                    {t("projectile-movement")}
+                                </NavLink>
+                            ),
                         },
                         {
                             key: "4",
-                            icon: <UploadOutlined />,
-                            label: "MRU y MRUV",
+                            icon: <QuestionOutlined />,
+                            label: t("urm-uam"),
                         },
                         {
                             key: "5",
-                            icon: <UploadOutlined />,
-                            label: "Primera ley de Newton",
+                            icon: <QuestionOutlined />,
+                            label: t("newton-first-law"),
                         },
                         {
                             key: "6",
-                            icon: <UploadOutlined />,
-                            label: "Segunda ley de Newton",
+                            icon: <QuestionOutlined />,
+                            label: t("newton-second-law"),
                         },
                         {
                             key: "7",
-                            icon: <UploadOutlined />,
-                            label: "Tercera ley de Newton",
+                            icon: <QuestionOutlined />,
+                            label: t("newton-third-law"),
                         },
                     ]}
                 />
