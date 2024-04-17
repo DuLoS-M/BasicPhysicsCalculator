@@ -55,14 +55,22 @@ export function determineConversionType(
     if (type in timeConversionValues) {
         return "time";
     }
-    throw new Error(`Unsupported conversion type: ${type}`);
+}
+
+export function determineIfCompatible(
+    fromType: LengthUnit | MassUnit | TimeUnit,
+    toType: LengthUnit | MassUnit | TimeUnit
+) {
+    return (
+        determineConversionType(fromType) === determineConversionType(toType)
+    );
 }
 
 export function convertUnit(
     conversionType: "length" | "mass" | "time",
     value: number,
-    fromUnit: LengthUnit | MassUnit | TimeUnit,
-    toUnit: LengthUnit | MassUnit | TimeUnit
+    fromUnit: LengthUnit | MassUnit | TimeUnit | null,
+    toUnit: LengthUnit | MassUnit | TimeUnit | null
 ): number {
     switch (conversionType) {
         case "length":
@@ -75,5 +83,7 @@ export function convertUnit(
             return convertMass(value, fromUnit as MassUnit, toUnit as MassUnit);
         case "time":
             return convertTime(value, fromUnit as TimeUnit, toUnit as TimeUnit);
+        default:
+            return value;
     }
 }
