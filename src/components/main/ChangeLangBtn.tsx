@@ -1,22 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { FloatButton } from "antd";
 
 export default function ChangeLangBtn() {
     const [language, setLanguage] = useState("en");
     const { i18n, ready } = useTranslation();
-    const firstRender = useRef(true);
 
-    useEffect(() => {
-        if (firstRender.current) {
-            firstRender.current = false;
-            return;
-        }
-        document.documentElement.lang = language;
+    function switchLanguage(nextLanguage: string) {
+        setLanguage(nextLanguage);
+        document.documentElement.lang = nextLanguage;
         if (ready) {
-            i18n.changeLanguage(language);
+            i18n.changeLanguage(nextLanguage);
         }
-    }, [language]);
+    }
 
     const nextLanguage = language === "en" ? "es" : "en";
     const description = nextLanguage.toUpperCase();
@@ -28,7 +24,7 @@ export default function ChangeLangBtn() {
     return (
         <FloatButton
             onClick={() => {
-                setLanguage(nextLanguage);
+                switchLanguage(nextLanguage);
             }}
             shape="square"
             description={description}
