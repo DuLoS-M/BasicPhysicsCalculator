@@ -47,11 +47,11 @@ export const massConversionValues = {
 };
 
 export const massConversionUnits = [
-    "kilogram",
-    "gram",
-    "ton",
-    "pound",
-    "ounce",
+    { name: "Kg", value: "kilogram" },
+    { name: "g", value: "gram" },
+    { name: "ton", value: "ton" },
+    { name: "lb", value: "pound" },
+    { name: "oz", value: "ounce" },
 ];
 
 export type MassUnit = keyof typeof massConversionValues;

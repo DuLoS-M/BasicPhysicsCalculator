@@ -167,17 +167,17 @@ export const lengthConversionValues = {
 };
 
 export const lengthConversionUnits = [
-    "meter",
-    "kilometer",
-    "mile",
-    "foot",
-    "centimeter",
-    "inch",
-    "nauticalMile",
-    "yard",
-    "millimeter",
-    "micrometer",
-    "nanometer",
+    { name: "m", value: "meter" },
+    { name: "km", value: "kilometer" },
+    { name: "mi", value: "mile" },
+    { name: "ft", value: "foot" },
+    { name: "cm", value: "centimeter" },
+    { name: "in", value: "inch" },
+    { name: "nmi", value: "nauticalMile" },
+    { name: "yd", value: "yard" },
+    { name: "mm", value: "millimeter" },
+    { name: "μm", value: "micrometer" },
+    { name: "nm", value: "nanometer" },
 ];
 
 export type LengthUnit = keyof typeof lengthConversionValues;

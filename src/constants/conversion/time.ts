@@ -79,13 +79,23 @@ export const timeConversionValues = {
 };
 
 export const timeConversionUnits = [
-    "second",
-    "minute",
-    "hour",
-    "day",
-    "week",
-    "month",
-    "year",
+    { name: "s", value: "second" },
+    { name: "m", value: "minute" },
+    { name: "h", value: "hour" },
+    { name: "d", value: "day" },
+    { name: "w", value: "week" },
+    { name: "m", value: "month" },
+    { name: "y", value: "year" },
 ];
+
+// export const timeConversionUnits = [
+//     "second",
+//     "minute",
+//     "hour",
+//     "day",
+//     "week",
+//     "month",
+//     "year",
+// ];
 
 export type TimeUnit = keyof typeof timeConversionValues;
