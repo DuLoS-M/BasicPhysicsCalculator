@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Home from "./pages/Home";
 import NavBar from "./layout/NavBar";
-import UnitConversion from "./pages/UnitConversion";
+import { UnitConversion } from "./pages/UnitConversion";
 import SumOfVectors from "./pages/SumOfVectors";
 import ProjectileTrajectory from "./pages/ProjectileTrajectory";
 
