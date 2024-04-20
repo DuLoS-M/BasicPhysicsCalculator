@@ -6,6 +6,8 @@ import NavBar from "./layout/NavBar";
 import { UnitConversion } from "./pages/UnitConversion";
 import SumOfVectors from "./pages/SumOfVectors";
 import ProjectileTrajectory from "./pages/ProjectileTrajectory";
+import { Spin, Flex } from "antd";
+import Loading from "./pages/Loading";
 
 export const router = createBrowserRouter([
     {
@@ -14,12 +16,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: (
-                    <div>
-                        <Link to="/contact">Contact</Link>
-                        <Link to="/">Home</Link>
-                    </div>
-                ),
+                element: <Loading />,
             },
             {
                 path: "/unit-conversion",
