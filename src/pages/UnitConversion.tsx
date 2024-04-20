@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Typography } from "antd";
 import { UnitSelect } from "src/components/UnitConversion/UnitSelect";
 import { capitalizeFirst } from "src/utils/strings";
+import { CopyOutlined, SwapOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 
@@ -34,6 +35,13 @@ export const UnitConversion: React.FC = () => {
     const { t } = useTranslation("UnitConversion");
 
     const isCompatibleConversion = determineIfCompatible(fromUnit, toUnit);
+
+    const handleSwap = () => {
+        const temp = fromUnit;
+        setFromUnit(toUnit);
+        setToUnit(temp);
+        setValue(convertedValue);
+    };
 
     useEffect(() => {
         if (isCompatibleConversion) {
@@ -87,10 +95,27 @@ export const UnitConversion: React.FC = () => {
                     />
                     <InputNumber
                         disabled
+                        rootClassName="rounded-l-none"
                         value={convertedValue}
                         status={isCompatibleConversion ? "" : "error"}
                         min={0}
                         addonAfter={UnitConvertedSelectComponent}
+                    />
+                </Flex>
+                <Flex className="mt-4" gap="middle">
+                    <Button
+                        icon={<CopyOutlined />}
+                        onClick={() => {
+                            navigator.clipboard.writeText(
+                                convertedValue.toString()
+                            );
+                        }}
+                    />
+                    <Button
+                        icon={<SwapOutlined />}
+                        onClick={() => {
+                            handleSwap();
+                        }}
                     />
                 </Flex>
                 {/* <Button
