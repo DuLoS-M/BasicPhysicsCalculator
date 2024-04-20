@@ -1,23 +1,23 @@
-import type { LinearVector, ComponentVector } from "src/types";
+import type { LinearVector, ComponentVector, Vector } from "src/types";
 
 export function convertLinearToComponentForm(
-    vectors: LinearVector[]
-): ComponentVector[] {
-    let newVectors: ComponentVector[] = vectors.map((vector) => {
-        let x =
-            Math.sin(vector.theta) * Math.cos(vector.phi) * vector.magnitude;
-        let y =
-            Math.sin(vector.theta) * Math.sin(vector.phi) * vector.magnitude;
-        let z = Math.cos(vector.theta) * vector.magnitude;
+    vector: LinearVector
+): ComponentVector {
+    return {
+        x: Math.sin(vector.theta) * Math.cos(vector.phi) * vector.magnitude,
+        y: Math.sin(vector.theta) * Math.sin(vector.phi) * vector.magnitude,
+        z: Math.cos(vector.theta) * vector.magnitude,
+        type: "component",
+    };
+}
 
-        return {
-            x: +x.toFixed(5),
-            y: +y.toFixed(5),
-            z: +z.toFixed(5),
-        };
+export function normalizeVectors(vectors: Vector[]): ComponentVector[] {
+    return vectors.map((vector) => {
+        if (vector.type === "linear") {
+            return convertLinearToComponentForm(vector);
+        }
+        return vector;
     });
-
-    return newVectors;
 }
 
 export function sumVectors(vectors: ComponentVector[]): ComponentVector {
@@ -26,7 +26,8 @@ export function sumVectors(vectors: ComponentVector[]): ComponentVector {
             x: accumulator.x + item.x,
             y: accumulator.y + item.y,
             z: accumulator.z + item.z,
+            type: accumulator.type,
         }),
-        { x: 0, y: 0, z: 0 }
+        { x: 0, y: 0, z: 0, type: "component" }
     );
 }
