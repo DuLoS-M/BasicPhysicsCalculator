@@ -1,3 +1,14 @@
 {
-    "sum-of-vectors": "Sum of vectors"
+    "sum-of-vectors": "Sum of vectors",
+    "angle-from-x-to-y": "Angle from x to y",
+    "angle-from-x-to-z": "Angle from x to z",
+    "angle": "Angle",
+    "magnitude": "Magnitude",
+    "x-component": "x component",
+    "y-component": "y component",
+    "z-component": "z component",
+    "component": "Component",
+    "component-form": "Component form",
+    "linear-form": "Linear form",
+    "change-vector-type": "Change vector type"
 }

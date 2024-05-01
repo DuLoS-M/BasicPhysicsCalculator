@@ -16,7 +16,8 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Loading />,
+                element: <Home />,
+                // element: <Loading />,
             },
             {
                 path: "/unit-conversion",

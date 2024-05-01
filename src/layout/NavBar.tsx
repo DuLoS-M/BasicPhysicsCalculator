@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Layout, Menu, Button, theme } from "antd";
 import { SwapOutlined, QuestionOutlined } from "@ant-design/icons";
 import { Outlet } from "react-router-dom";
@@ -6,6 +6,8 @@ import VectorIcon from "../assets/icons/vector";
 import TrajectoryIcon from "../assets/icons/trajectory";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import Loading from "src/pages/Loading";
+import { startTransition } from "react";
 
 const { Header, Sider, Content } = Layout;
 
@@ -79,9 +81,13 @@ export default function NavBar() {
                     ]}
                 />
             </Sider>
-            <Layout>
-                <Outlet />
-            </Layout>
+            <Suspense>
+                <Suspense fallback={<Loading />}>
+                    <Layout>
+                        <Outlet />
+                    </Layout>
+                </Suspense>
+            </Suspense>
         </Layout>
     );
 }
