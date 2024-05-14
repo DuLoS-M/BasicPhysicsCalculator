@@ -10,11 +10,15 @@ import VectorInputs from "src/components/SumOfVectors/VectorInputs";
 import VectorList from "src/components/SumOfVectors/VectorList";
 const { Title, Text } = Typography;
 import type { VectorType, Vector } from "src/types";
+import { normalizeVectors, sumVectors } from "src/utils/vectors";
+import VectorRender from "src/components/SumOfVectors/VectorRender";
+import { Vector3 } from "three";
 
 export default function SumOfVectors() {
     const { t } = useTranslation("SumOfVectors");
     const [vectors, setVectors] = useState([]);
     const [vectorType, setVectorType] = useState<VectorType>("linear");
+    const resultingVector = sumVectors(normalizeVectors(vectors));
 
     function handleTypeChange() {
         setVectorType(vectorType === "linear" ? "component" : "linear");
@@ -34,21 +38,25 @@ export default function SumOfVectors() {
         setVectors(newVectors);
     }
 
-    useEffect(() => {
-        console.log(vectors);
-    }, [vectors]);
+    // useEffect(() => {
+    //     console.log(vectors);
+    // }, [vectors]);
 
     return (
-        <Flex
-            // justify="center"
-            align="center"
-            gap="middle"
-            style={{ height: "100%" }}
-            vertical
-        >
+        <div className="flex flex-col justify-start h-full w-full items-center overflow-hidden">
             <Title>{t("sum-of-vectors")}</Title>
-            <VectorInputs onVectorAdd={addVector} />
-            <VectorList vectors={vectors} />
-        </Flex>
+            <div className="flex flex-col sm:flex-row sm:justify-center gap-8 mx-4 flex-wrap">
+                <div>
+                    <VectorInputs onVectorAdd={addVector} />
+                    <div>Resulting vector:</div>
+                    <div>{`X:${resultingVector.x} | Y:${resultingVector.y} | Z:${resultingVector.z}`}</div>
+                    <VectorRender
+                        vectors={vectors}
+                        resultingVector={resultingVector}
+                    />
+                </div>
+                <VectorList vectors={vectors} onDelete={removeVector} />
+            </div>
+        </div>
     );
 }

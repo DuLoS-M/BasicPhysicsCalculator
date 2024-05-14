@@ -18,7 +18,7 @@ export default function NavBar() {
     } = theme.useToken();
 
     return (
-        <Layout hasSider className="h-screen">
+        <Layout hasSider className="min-h-screen">
             <Sider
                 className="flex flex-col border-r"
                 collapsible
