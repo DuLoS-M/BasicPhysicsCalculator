@@ -3,10 +3,44 @@ import type { LinearVector, ComponentVector, Vector } from "src/types";
 export function convertLinearToComponentForm(
     vector: LinearVector
 ): ComponentVector {
+    const thetaInRadians = vector.theta * (Math.PI / 180);
+    const phiInRadians = vector.phi * (Math.PI / 180);
+
+    // console.log({
+    //     x: Number(
+    //         (
+    //             vector.magnitude *
+    //             Math.sin(thetaInRadians) *
+    //             Math.cos(phiInRadians)
+    //         ).toFixed(5)
+    //     ),
+    //     y: Number(
+    //         (
+    //             vector.magnitude *
+    //             Math.sin(thetaInRadians) *
+    //             Math.sin(phiInRadians)
+    //         ).toFixed(5)
+    //     ),
+    //     z: Number((vector.magnitude * Math.cos(thetaInRadians)).toFixed(5)),
+    //     type: "component",
+    // });
+
     return {
-        x: Math.sin(vector.theta) * Math.cos(vector.phi) * vector.magnitude,
-        y: Math.sin(vector.theta) * Math.sin(vector.phi) * vector.magnitude,
-        z: Math.cos(vector.theta) * vector.magnitude,
+        x: Number(
+            (
+                vector.magnitude *
+                Math.sin(thetaInRadians) *
+                Math.cos(phiInRadians)
+            ).toFixed(5)
+        ),
+        y: Number(
+            (
+                vector.magnitude *
+                Math.sin(thetaInRadians) *
+                Math.sin(phiInRadians)
+            ).toFixed(5)
+        ),
+        z: Number((vector.magnitude * Math.cos(thetaInRadians)).toFixed(5)),
         type: "component",
     };
 }
@@ -23,9 +57,9 @@ export function normalizeVectors(vectors: Vector[]): ComponentVector[] {
 export function sumVectors(vectors: ComponentVector[]): ComponentVector {
     return vectors.reduce(
         (accumulator, item) => ({
-            x: accumulator.x + item.x,
-            y: accumulator.y + item.y,
-            z: accumulator.z + item.z,
+            x: Number((accumulator.x + item.x).toFixed(6)),
+            y: Number((accumulator.y + item.y).toFixed(6)),
+            z: Number((accumulator.z + item.z).toFixed(6)),
             type: accumulator.type,
         }),
         { x: 0, y: 0, z: 0, type: "component" }
