@@ -8,4 +8,26 @@ body {
   margin: auto;
   min-height: 100vh;
   min-width: 100vw;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #188fff1f;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #1890ff;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
 }
