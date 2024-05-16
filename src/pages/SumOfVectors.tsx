@@ -16,7 +16,7 @@ const { Title, Text } = Typography;
 export default function SumOfVectors() {
     const { t } = useTranslation("SumOfVectors");
     const [vectors, setVectors] = useState([]);
-    const [vectorType, setVectorType] = useState<VectorType>("linear");
+    const [vectorType, setVectorType] = useState<VectorType>("component");
     const resultingVector = sumVectors(normalizeVectors(vectors));
 
     function handleTypeChange() {
