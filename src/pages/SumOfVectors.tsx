@@ -8,11 +8,10 @@ import { CopyOutlined, SwapOutlined, PlusOutlined } from "@ant-design/icons";
 import AngleIcon from "src/assets/icons/angle";
 import VectorInputs from "src/components/SumOfVectors/VectorInputs";
 import VectorList from "src/components/SumOfVectors/VectorList";
-const { Title, Text } = Typography;
 import type { VectorType, Vector } from "src/types";
 import { normalizeVectors, sumVectors } from "src/utils/vectors";
 import VectorRender from "src/components/SumOfVectors/VectorRender";
-import { Vector3 } from "three";
+const { Title, Text } = Typography;
 
 export default function SumOfVectors() {
     const { t } = useTranslation("SumOfVectors");

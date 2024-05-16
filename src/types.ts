@@ -15,3 +15,13 @@ export type LinearVector = {
 export type Vector = LinearVector | ComponentVector;
 
 export type VectorType = "linear" | "component";
+
+export type ComponentVelocity = {
+    x: number;
+    y: number;
+};
+
+export type ValueWithUnit = {
+    value: number;
+    unit: string;
+};
