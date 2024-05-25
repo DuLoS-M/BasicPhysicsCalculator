@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Select, Typography } from "antd";
-
+import ProjectileTrajectoryContext from "src/components/context/ProjectileTrajectoryContext";
+import ProjectileTrajectoryProvider from "src/components/context/ProjectileTrajectoryContext";
+import DetermineForm from "src/components/ProjectileTrajectory/DetermineForm";
+import Result from "src/components/ProjectileTrajectory/Result";
 /*
 Variables to find:
 Initial Height ###
@@ -17,6 +20,7 @@ const { Title } = Typography;
 
 export default function ProjectileTrajectory() {
     const [variable, setVariable] = useState<string>("height");
+
     return (
         <div className="flex flex-col items-center">
             <Title>Projectile Trajectory</Title>
@@ -42,7 +46,10 @@ export default function ProjectileTrajectory() {
                     Angle of the velocity
                 </Select.Option>
             </Select>
-            
+            <ProjectileTrajectoryProvider>
+                <DetermineForm variable={variable} />
+                <Result />
+            </ProjectileTrajectoryProvider>
         </div>
     );
 }

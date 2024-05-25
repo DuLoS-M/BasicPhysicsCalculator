@@ -184,7 +184,7 @@ export default function VectorRender({
     resultingVector: ComponentVector;
 }) {
     return (
-        <div className="h-max w-max flex justify-center items-center">
+        <div className="h-max w-max flex justify-center items-center border-blue-500 border rounded-md my-3">
             <Canvas className="">
                 <ambientLight intensity={0.1} />
                 {/* <directionalLight color="red" position={[5, 0, 10]} /> */}

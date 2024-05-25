@@ -1,4 +1,8 @@
-import type { ComponentVelocity, ValueWithUnit } from "src/types";
+import type {
+    ComponentVelocity,
+    ValueWithUnit,
+    LinearVelocity,
+} from "src/types";
 import { EARTH_GRAVITY } from "src/constants/forces";
 /*
 ---Projectile trayectory---
@@ -54,8 +58,10 @@ function getVelocityComponents(
     velocity: number,
     angle: number
 ): ComponentVelocity {
-    const xComponent = Math.cos(30) * velocity;
-    const yComponent = Math.sin(30) * velocity;
+    const ANGLE_IN_RADIANS = angle * (Math.PI / 180);
+
+    const xComponent = Math.cos(ANGLE_IN_RADIANS) * velocity;
+    const yComponent = Math.sin(ANGLE_IN_RADIANS) * velocity;
 
     return { x: xComponent, y: yComponent };
 }
@@ -64,14 +70,33 @@ function calculateHeight(
     time: number,
     initialVelocity: number,
     launchAngle: number,
+    initialHeight: number = 0,
     gravity: number = EARTH_GRAVITY
 ): ValueWithUnit {
     const { y: yVelocity } = getVelocityComponents(
         initialVelocity,
         launchAngle
     );
-    const height = yVelocity * time - 0.5 * gravity * time ** 2;
+    const height = initialHeight + yVelocity * time - 0.5 * gravity * time ** 2;
     return { value: height, unit: "m" };
+}
+
+function calculateHeightFromMaxHeightAndTime(
+    maxHeight: number,
+    timeToMaxHeight: number,
+    time: number,
+    gravity: number = EARTH_GRAVITY
+): ValueWithUnit {
+    const height = maxHeight - 0.5 * gravity * (time - timeToMaxHeight) ** 2;
+    return { value: height, unit: "m" };
+}
+
+function calculateMaxHeightFromTimeToMaxHeight(
+    timeToMaxHeight: number,
+    gravity: number = EARTH_GRAVITY
+): ValueWithUnit {
+    const maxHeight = 0.5 * gravity * timeToMaxHeight ** 2;
+    return { value: maxHeight, unit: "m" };
 }
 
 function calculateMaxHeight(
@@ -83,45 +108,48 @@ function calculateMaxHeight(
         initialVelocity,
         launchAngle
     );
-    const { root1: time1, root2: time2 } = solveQuadratic(
-        yVelocity,
-        0.5 * -gravity,
-        0
-    );
-
-    const root1 = calculateHeight(time1, initialVelocity, launchAngle);
-    const root2 = calculateHeight(time2, initialVelocity, launchAngle);
-
-    if (root1.value > 0) {
-        return root1;
-    }
-    return root2;
+    const maxHeight = yVelocity ** 2 / (2 * gravity);
+    return { value: maxHeight, unit: "m" };
 }
 
 function calculateDistance(
-    time: number,
     initialVelocity: number,
-    launchAngle: number
+    launchAngle: number,
+    time: number
 ) {
     const { x: xVelocity } = getVelocityComponents(
         initialVelocity,
         launchAngle
     );
-    const distance = xVelocity * time;
+    const range = xVelocity * time;
+    return { value: range, unit: "m" };
+}
+
+function calculateDistanceFromTimeAndVelocity(
+    time: number,
+    InitialVelocity: number,
+    launchAngle: number
+): ValueWithUnit {
+    const { x: xVelocity, y: yVelocity } = getVelocityComponents(
+        InitialVelocity,
+        launchAngle
+    );
+
+    const distance = time * xVelocity;
     return { value: distance, unit: "m" };
 }
 
-function calculateTimeY(
+function calculateTimeFromHeightAndVelocity(
     height: number,
-    velocity: number,
-    angle: number,
+    initialVelocity: number,
+    launchAngle: number,
     gravity: number = EARTH_GRAVITY
 ): ValueWithUnit[] {
     let time;
 
     const { x: xVelocity, y: yVelocity } = getVelocityComponents(
-        velocity,
-        angle
+        initialVelocity,
+        launchAngle
     );
 
     const { root1: time1, root2: time2 } = solveQuadratic(
@@ -138,25 +166,64 @@ function calculateTimeY(
     return time;
 }
 
-function calculateTimeX(
+function calculateTimeFromDistanceAndVelocity(
     distance: number,
-    velocity: number,
-    angle: number
+    initialVelocity: number,
+    launchAngle: number
 ): ValueWithUnit {
     let time;
 
     const { x: xVelocity, y: yVelocity } = getVelocityComponents(
-        velocity,
-        angle
+        initialVelocity,
+        launchAngle
     );
 
     time = distance / xVelocity;
     return { value: time, unit: "s" };
 }
 
-function calculateFinalVelocity(initialVelocity: number, time: number) {
-    const finalVel = initialVelocity - EARTH_GRAVITY * time;
-    return { value: finalVel, unit: "m/s" };
+function calculateTimeFromFinalVelocityAndGravity(
+    finalVelocity: number,
+    initialVelocity: number,
+    gravity: number = EARTH_GRAVITY
+): ValueWithUnit {
+    const time = (finalVelocity - initialVelocity) / gravity;
+    return { value: time, unit: "s" };
+}
+
+function calculateVelocity(
+    initialVelocity: number,
+    launchAngle: number,
+    time: number,
+    gravity: number = EARTH_GRAVITY
+): LinearVelocity {
+    const { x: xVelocity, y: yInitialVelocity } = getVelocityComponents(
+        initialVelocity,
+        launchAngle
+    );
+    const yVelocity = yInitialVelocity - gravity * time;
+    const magnitude = Math.sqrt(xVelocity ** 2 + yVelocity ** 2);
+    const direction = Math.atan2(yVelocity, xVelocity) * (180 / Math.PI);
+    return { magnitude, angle: direction };
+}
+
+function calculateVelocityFromDisplacementAndTime(
+    displacement: number,
+    time: number
+): LinearVelocity {
+    const velocity = displacement / time;
+    const magnitude = Math.abs(velocity);
+    const direction = velocity >= 0 ? 0 : 180;
+    return { magnitude, angle: direction };
+}
+
+function calculateInitialVelocity(
+    finalVelocity: number,
+    gravity: number,
+    time: number
+): ValueWithUnit {
+    const initialVelocity = finalVelocity - gravity * time;
+    return { value: initialVelocity, unit: "m/s" };
 }
 
 function calculateGravity(
@@ -167,3 +234,38 @@ function calculateGravity(
     const gravity = (initialVelocity - finalVelocity) / time;
     return { value: gravity, unit: "m/s^2" };
 }
+
+function calculateGravityFromHeightAndTime(
+    height: number,
+    time: number
+): ValueWithUnit {
+    const gravity = (2 * height) / time ** 2;
+    return { value: gravity, unit: "m/s^2" };
+}
+
+function calculateVelocityAngle(
+    xVelocity: number,
+    yVelocity: number
+): ValueWithUnit {
+    const angleInRadians = Math.atan2(yVelocity, xVelocity);
+    const angleInDegrees = angleInRadians * (180 / Math.PI);
+    return { value: angleInDegrees, unit: "degrees" };
+}
+
+export {
+    calculateHeight,
+    calculateHeightFromMaxHeightAndTime,
+    calculateMaxHeightFromTimeToMaxHeight,
+    calculateMaxHeight,
+    calculateDistance,
+    calculateDistanceFromTimeAndVelocity,
+    calculateTimeFromHeightAndVelocity,
+    calculateTimeFromDistanceAndVelocity,
+    calculateTimeFromFinalVelocityAndGravity,
+    calculateVelocity,
+    calculateVelocityFromDisplacementAndTime,
+    calculateInitialVelocity,
+    calculateGravity,
+    calculateGravityFromHeightAndTime,
+    calculateVelocityAngle,
+};

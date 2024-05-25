@@ -61,23 +61,23 @@ export default function NavBar() {
                         {
                             key: "4",
                             icon: <QuestionOutlined />,
-                            label: t("urm-uam"),
+                            label: t("student-info"),
                         },
-                        {
-                            key: "5",
-                            icon: <QuestionOutlined />,
-                            label: t("newton-first-law"),
-                        },
-                        {
-                            key: "6",
-                            icon: <QuestionOutlined />,
-                            label: t("newton-second-law"),
-                        },
-                        {
-                            key: "7",
-                            icon: <QuestionOutlined />,
-                            label: t("newton-third-law"),
-                        },
+                        // {
+                        //     key: "5",
+                        //     icon: <QuestionOutlined />,
+                        //     label: t("newton-first-law"),
+                        // },
+                        // {
+                        //     key: "6",
+                        //     icon: <QuestionOutlined />,
+                        //     label: t("newton-second-law"),
+                        // },
+                        // {
+                        //     key: "7",
+                        //     icon: <QuestionOutlined />,
+                        //     label: t("newton-third-law"),
+                        // },
                     ]}
                 />
             </Sider>
@@ -91,3 +91,6 @@ export default function NavBar() {
         </Layout>
     );
 }
+/*
+
+*/

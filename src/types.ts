@@ -21,6 +21,11 @@ export type ComponentVelocity = {
     y: number;
 };
 
+export type LinearVelocity = {
+    magnitude: number;
+    angle: number;
+};
+
 export type ValueWithUnit = {
     value: number;
     unit: string;
