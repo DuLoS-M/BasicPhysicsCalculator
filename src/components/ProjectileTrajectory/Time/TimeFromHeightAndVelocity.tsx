@@ -24,7 +24,7 @@ function TimeFromHeightAndVelocity() {
         );
         setResult(
             <div>
-                Time 1:{result[0].value} Time 2: {result[1].value}
+                Time 1:{result[0].value} Time 2: {result[1].value} |
             </div>
         );
     };

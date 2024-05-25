@@ -20,7 +20,7 @@ function TimeFromDistanceAndVelocity() {
             values.initialVelocity,
             values.launchAngle
         );
-        setResult(<div>Time:{result.value}</div>);
+        setResult(<div>Time:{result.value} | Formula: x/VoX</div>);
     };
     return (
         <Form name="height_form" onFinish={onFinish}>

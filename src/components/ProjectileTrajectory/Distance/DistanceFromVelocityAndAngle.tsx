@@ -20,7 +20,7 @@ function DistanceFromVelocityAndAngle() {
             values.launchAngle,
             values.time
         );
-        setResult(<div>Distance:{result.value}</div>);
+        setResult(<div>Distance:{result.value} Formula: Vx * x</div>);
     };
     return (
         <Form name="height_form" onFinish={onFinish}>

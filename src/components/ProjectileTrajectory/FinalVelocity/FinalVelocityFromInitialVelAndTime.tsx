@@ -24,7 +24,8 @@ function FinalVelocityFromInitialVelAndTime() {
         );
         setResult(
             <div>
-                Velocity: {result.magnitude} Angle: {result.angle}
+                Velocity: {result.magnitude} Angle: {result.angle} | Formula:
+                VoY - g*t
             </div>
         );
     };

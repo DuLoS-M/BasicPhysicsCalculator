@@ -18,7 +18,7 @@ export default function MaxHeightFromTimeToMaxHeight() {
             values.timeToMaxHeight,
             values.gravity
         );
-        setResult(<div>Max height{result.value}</div>);
+        setResult(<div>Max height{result.value} | Formula: 0.5*g*tHmax^2</div>);
     };
     return (
         <Form name="height_form" onFinish={onFinish}>

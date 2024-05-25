@@ -21,7 +21,11 @@ function HeightFromMaxHeightAndTime() {
             values.time,
             values.gravity
         );
-        setResult(<div>Height{result.value}</div>);
+        setResult(
+            <div>
+                Height{result.value} | Formula: Hmax - 0.5*g * (t-tHmax)**2
+            </div>
+        );
     };
     return (
         <Form name="height_form" onFinish={onFinish}>

@@ -108,7 +108,9 @@ function calculateMaxHeight(
         initialVelocity,
         launchAngle
     );
+    console.log({ initialVelocity, launchAngle, gravity });
     const maxHeight = yVelocity ** 2 / (2 * gravity);
+    console.log(maxHeight);
     return { value: maxHeight, unit: "m" };
 }
 

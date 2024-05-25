@@ -22,7 +22,11 @@ function HeightFromTimeAndVelocity() {
             values.initialHeight,
             values.gravity
         );
-        setResult(<div>Height:{result.value}</div>);
+        setResult(
+            <div>
+                Height:{result.value} | Formula: hInit + VoY * t - 0.5*g * t^2
+            </div>
+        );
     };
     return (
         <Form name="height_form" onFinish={onFinish}>

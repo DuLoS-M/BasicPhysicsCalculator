@@ -20,7 +20,9 @@ function VelocityFromFinalVelAndTime() {
             values.time,
             values.gravity
         );
-        setResult(<div>velocity(y): {result.value}</div>);
+        setResult(
+            <div>velocity(y): {result.value} | Formula: Vfy - g * t</div>
+        );
     };
     return (
         <Form name="height_form" onFinish={onFinish}>

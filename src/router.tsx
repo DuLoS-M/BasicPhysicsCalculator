@@ -6,6 +6,7 @@ import NavBar from "./layout/NavBar";
 import { UnitConversion } from "./pages/UnitConversion";
 import SumOfVectors from "./pages/SumOfVectors";
 import ProjectileTrajectory from "./pages/ProjectileTrajectory";
+import StudentInfo from "./pages/StudentInfo";
 import { Spin, Flex } from "antd";
 import Loading from "./pages/Loading";
 
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
             {
                 path: "/projectile-movement",
                 element: <ProjectileTrajectory />,
+            },
+            {
+                path: "/student-info",
+                element: <StudentInfo />,
             },
         ],
     },

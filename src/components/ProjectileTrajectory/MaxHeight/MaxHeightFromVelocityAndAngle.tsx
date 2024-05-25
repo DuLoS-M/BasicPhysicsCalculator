@@ -5,9 +5,9 @@ import { useContext } from "react";
 import { ProjectileTrajectoryContext } from "src/components/context/ProjectileTrajectoryContext";
 
 type MaxHeightFromVelocityAndAngleProps = {
-    InitialVelocity: number;
-    LaunchAngle: number;
-    Gravity?: number;
+    initialVelocity: number;
+    launchAngle: number;
+    gravity?: number;
 };
 
 export default function MaxHeightFromVelocityAndAngle() {
@@ -16,11 +16,11 @@ export default function MaxHeightFromVelocityAndAngle() {
     const onFinish = (values: MaxHeightFromVelocityAndAngleProps) => {
         console.log("Received values from form: ", values);
         const result = calculateMaxHeight(
-            values.InitialVelocity,
-            values.LaunchAngle,
-            values.Gravity
+            values.initialVelocity,
+            values.launchAngle,
+            values.gravity
         );
-        setResult(<div>Max height{result.value}</div>);
+        setResult(<div>Max height:{result.value} | Formula Voy^2 / 2*g</div>);
     };
     return (
         <Form name="height_form" onFinish={onFinish}>

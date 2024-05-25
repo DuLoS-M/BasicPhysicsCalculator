@@ -20,7 +20,7 @@ function TimeFromFinalVelocityAndGravity() {
             values.finalVelocity,
             values.gravity
         );
-        setResult(<div>Time:{result.value}</div>);
+        setResult(<div>Time:{result.value} | Formulas: (Vfy - Voy) / g</div>);
     };
 
     return (
